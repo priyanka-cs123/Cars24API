@@ -14,13 +14,16 @@ builder.Services.AddSingleton<CarService>();
 builder.Services.AddSingleton<BookingService>();
 builder.Services.AddSingleton<AppointmentService>();
 
+// 🔥 ADD THIS BEFORE builder.Build()
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
-app.UseAuthorization();
+app.UseAuthorization();   
 app.MapControllers();
 
 app.Run();
